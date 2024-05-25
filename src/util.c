@@ -94,9 +94,9 @@ int read_csv(SCOPE_t* state) {
     }
     char cur_line[256];
     int alrady_alloced = 10;
-    state->data = (DATA_ROW_t* ) malloc(sizeof(DATA_ROW_t) * alrady_alloced); /* Аллокация стартовых 10 строк */
+    state->data = (DATA_ROW_t* ) malloc(sizeof(DATA_ROW_t) * alrady_alloced); /* Аллокация стартовых 10 строк данныъх */
     if(state->data == NULL){
-        fprintf(stderr, "Buy more RAM!!!! xD");
+        fprintf(stderr, "LOL buy more RAM!!!! xD\n");
         return 0;
     }
     state->data_cnt = 0;
@@ -116,7 +116,7 @@ int read_csv(SCOPE_t* state) {
             if(state->data_cnt >= alrady_alloced){
                 state->data = (DATA_ROW_t* ) realloc(state->data, (state->data_cnt + 10) * sizeof(DATA_ROW_t));
                 if(state->data == NULL){
-                    fprintf(stderr, "Buy more RAM!!!! xD\n");
+                    fprintf(stderr, "LOL buy more RAM!!!! xD\n");
                     free(state->data);
                     fclose(file);
                     return 0;
