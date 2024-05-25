@@ -9,7 +9,7 @@
 
 #ifndef UTIL
 #define UTIL
-
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #define FILE_PATH "-f"
@@ -90,5 +90,13 @@ void printf_data(SCOPE_t data);
  * @param number номер месяца
  */
 void int_to_mouth_name(char* dist, int number);
+
+/**
+ * @brief Парсер csv файла с данными
+ * @param state контекст исполнения
+ * @return int 0 в случае ошибки, 1 в случае успеха
+ */
+int read_csv(SCOPE_t* state);
+
 
 #endif
