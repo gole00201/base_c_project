@@ -9,7 +9,6 @@ SCOPE_t state = {
 
 int main(int argc, char** argv){
     if(!parse_args(argc, argv, &state)){
-        usage();
         return 1;
     }
     read_csv(&state);

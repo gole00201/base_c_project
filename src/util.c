@@ -3,7 +3,7 @@
 
 int parse_args(int argc, char** argv, SCOPE_t* state){
     if( argc < 2 ){
-        fprintf(stderr, "Недостаточно аргументов\n");
+        printf("Используйте -h, для получения инструкции\n");
         return 0;
     }
     for(int i = 1; i < argc; i++){
@@ -11,13 +11,15 @@ int parse_args(int argc, char** argv, SCOPE_t* state){
             state->csv_path = argv[i + 1];
         } else if(strcmp(argv[i], MOUNTH) == 0 && i + 1 < argc){
             state->need_mouth = atoi(argv[i + 1]);
+        } else if(strcmp(argv[i], "-h") == 0 && i < argc){
+            usage();
         }
     }
     return state->csv_path != NULL;
 }
 
 void usage(){
-    printf("Usage: temp_statistics -f <filename.csv> [-m <month>]\n");
+    printf("Использование: temp_stats -f <filename.csv> [-m <month>]\n");
 }
 
 
