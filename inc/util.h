@@ -44,6 +44,9 @@ typedef struct SCOPE_t
      */
     int need_mouth;
 
+    char need_sort;
+
+    int need_raw;
     /**
      * @brief Прочитанные данные (массив)
      */
@@ -98,5 +101,33 @@ void int_to_mouth_name(char* dist, int number);
  */
 int read_csv(SCOPE_t* state);
 
+/**
+ * @brief Обертка для qsort
+ * @param state контекст исполнения
+ * @param cmpr функция сравнения
+ */
+void sort_by(SCOPE_t* state, int(*cmpr)(const void* a, const void* b));
 
+/**
+ * @brief Сравнение по дате
+ * @param a
+ * @param b
+ * @return int a - b
+ */
+int cmpr_by_date(const void* a, const void* b);
+/**
+ * @brief Сравнение по температуре
+ * @param a
+ * @param b
+ * @return int a - b
+ */
+int cmpr_by_temp(const void* a, const void* b);
+
+/**
+ * @brief Функция смены строк данных
+ * @param data
+ * @param i
+ * @param j
+ */
+void swap_rows(DATA_ROW_t* data, int i, int j);
 #endif

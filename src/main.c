@@ -27,13 +27,26 @@ int main(int argc, char** argv){
     /**
      * @brief Выводим данные в соответсвии с контекстом
      */
-    if(state.need_mouth){
-        stats_one_mouth(state);
+    if( state.need_sort == 'd'){
+        sort_by(&state, cmpr_by_date);
+    } else if( state.need_sort == 't'){
+        printf("%c\n", state.need_sort);
+        sort_by(&state, cmpr_by_temp);
     } else {
-        stats_per_mouth(state);
-        stats_per_year(state);
+        fprintf(stderr, "Неизвестный ключ: %c\n", state.need_sort);
     }
-
+    if( state.need_mouth ){
+        stats_one_mouth(state);
+        free(state.data);
+        return 0;
+    }
+    if( state.need_raw ){
+        printf_data(state);
+        free(state.data);
+        return 0;
+    }
+    stats_per_mouth(state);
+    stats_per_year(state);
     /**
      * @brief I`m not Rust, but i`m memory safe xD
      */

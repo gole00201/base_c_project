@@ -13,31 +13,47 @@ int parse_args(int argc, char** argv, SCOPE_t* state){
             state->need_mouth = atoi(argv[i + 1]);
         } else if(strcmp(argv[i], "-h") == 0 && i < argc){
             usage();
+        } else if(strcmp(argv[i], "-r") == 0){
+            if(state->csv_path == NULL){
+                usage();
+            }
+            state->need_raw = 1;
+        } else if(strcmp(argv[i], "-s") == 0 && i + 1 < argc){
+            state->need_sort = argv[i + 1][0];
         }
     }
     return state->csv_path != NULL;
 }
 
 void usage(){
-    printf("Использование: temp_stats -f <filename.csv> [-m <month>]\n");
+    printf("Использование: temp_stats -f <filename.csv> [-m <month>] [-s <d> <t>] [-r]\n");
 }
 
 
 void printf_row(DATA_ROW_t row){
-    printf("Год: %d\n",         row.year);
-    printf("Месяц: %d\n",       row.mouth);
-    printf("День: %d\n",        row.day);
-    printf("Час: %d\n",         row.hour);
-    printf("Минута: %d\n",      row.minute);
-    printf("Температура: %d\n", row.temp);
+    printf("%d\t", row.year);
+    printf("%d\t", row.mouth);
+    printf("%d\t", row.day);
+    printf("%d\t", row.hour);
+    printf("%d\t", row.minute);
+    printf("%d\t", row.temp);
 }
 
 
 void printf_data(SCOPE_t state){
+    printf("\t-------------------------------\n");
+    printf("\t|        Таблица данных       |\n");
+    printf("\t-------------------------------\n");
+    printf("Год\t");
+    printf("Месяц\t");
+    printf("День\t");
+    printf("Час\t");
+    printf("Минута\t");
+    printf("Температура\n");
     for(int i = 0; i < state.data_cnt; i++){
         printf_row(state.data[i]);
+        printf("\n");
     }
-    printf("\n");
 }
 
 
@@ -127,4 +143,39 @@ int read_csv(SCOPE_t* state) {
     }
     fclose(file);
     return 1;
+}
+
+
+int cmpr_by_date(const void* a, const void* b) {
+    DATA_ROW_t* date1 = (DATA_ROW_t*)a;
+    DATA_ROW_t* date2 = (DATA_ROW_t*)b;
+    if (date1->year != date2->year) {
+        return date1->year - date2->year;
+    } else if (date1->mouth != date2->mouth) {
+        return date1->mouth - date2->mouth;
+    } else if (date1->day != date2->day) {
+        return date1->day - date2->day;
+    } else if (date1->hour != date2->hour) {
+        return date1->hour - date2->hour;
+    } else if (date1->minute != date2->minute) {
+        return date1->minute - date2->minute;
+    } else {
+        return 0;
+    }
+}
+
+int cmpr_by_temp(const void* a, const void* b){
+    DATA_ROW_t* temp1 = (DATA_ROW_t*)a;
+    DATA_ROW_t* temp2 = (DATA_ROW_t*)b;
+    return temp1->temp - temp2->temp;
+}
+
+void swap_rows(DATA_ROW_t* data, int i, int j){
+    DATA_ROW_t tmp = data[i];
+    data[i] = data[j];
+    data[j] = tmp;
+}
+
+void sort_by(SCOPE_t* state, int(*cmpr)(const void* a, const void* b)){
+    qsort(state->data, state->data_cnt, sizeof(DATA_ROW_t), cmpr);
 }
