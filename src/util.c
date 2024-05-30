@@ -11,14 +11,14 @@ int parse_args(int argc, char** argv, SCOPE_t* state){
             state->csv_path = argv[i + 1];
         } else if(strcmp(argv[i], MOUNTH) == 0 && i + 1 < argc){
             state->need_mouth = atoi(argv[i + 1]);
-        } else if(strcmp(argv[i], "-h") == 0 && i < argc){
+        } else if(strcmp(argv[i], HELP) == 0 && i < argc){
             usage();
-        } else if(strcmp(argv[i], "-r") == 0){
+        } else if(strcmp(argv[i], RAW) == 0){
             if(state->csv_path == NULL){
                 usage();
             }
             state->need_raw = 1;
-        } else if(strcmp(argv[i], "-s") == 0 && i + 1 < argc){
+        } else if(strcmp(argv[i], SORT) == 0 && i + 1 < argc){
             state->need_sort = argv[i + 1][0];
         }
     }

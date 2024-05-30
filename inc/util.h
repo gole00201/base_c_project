@@ -15,6 +15,8 @@
 #define FILE_PATH "-f"
 #define MOUNTH    "-m"
 #define HELP      "-h"
+#define SORT      "-s"
+#define RAW       "-r"
 
 /**
  * @brief Структурный тип описывающий строку данных
