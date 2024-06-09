@@ -16,7 +16,7 @@ SCOPE_t state = {
 
 int main(int argc, char** argv){
     #ifdef WIN32
-    setlocale(LC_ALL, "Russian");
+    setlocale(LC_ALL, "ru-RU");
     #endif
     /**
      * @brief Разбираем аргументы
