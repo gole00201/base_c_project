@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <util.h>
 #include <temp_functions.h>
+#include <locale.h>
 
 /**
  * @brief Инициализируем контекст исполнения
@@ -14,6 +15,9 @@ SCOPE_t state = {
 
 
 int main(int argc, char** argv){
+    #ifdef WIN32
+    setlocale(LC_ALL, "Russian");
+    #endif
     /**
      * @brief Разбираем аргументы
      */
